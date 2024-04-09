@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import "money_box.dart";
+import 'package:http/http.dart' as http;
+import 'info_pokemon.dart';
 
 final ThemeData appTheme = ThemeData(
   primaryColor: Colors.green,
@@ -40,21 +42,31 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   int number = 0;
 
+  // InfoPokemon _dataFromAPI = infoPokemonFromJson();
+
   @override
   void initState() {
     super.initState();
+    getInfoPokemon();
+  }
+
+  Future<void> getInfoPokemon() async {
     // ignore: avoid_print
-    print("เรียกใช้งาน init");
+    var url = "https://pokeapi.co/api/v2/pokemon/";
+    var response = await http.get(Uri.parse(url));
+    // _dataFromAPI = infoPokemonFromJson(response.body);
+
+    // ignore: avoid_print
+    print(response.body);
   }
 
   // แสดงผลข้อมูล
   @override
   Widget build(BuildContext context) {
     // ignore: avoid_print
-    print("เรียกใช้งาน build");
     return Scaffold(
       appBar: AppBar(
-        title: const Text("บัญชีของฉัน"),
+        title: const Text("ข้อมูล Pokemon "),
       ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
